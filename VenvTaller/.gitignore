@@ -1,0 +1,8 @@
+# Ingnorar el archivo de las variables de entorno
+.env
+
+# Ignorar archivos y carpetas python
+__pycache__/
+*.pyc
+
+flask_venv
