@@ -3,9 +3,9 @@ from datetime import date
 
 class Client(db.Model):
     id=db.column(db.Integer,primary_key=True)
-    name=db.column(db.String(20),nullable=True)
-    email=db.column(db.String(20),unique=True,nullable=True)
-    phone=db.column(db.String(13),unique=True,nullable=True)
+    name=db.column(db.String(40),nullable=True)
+    email=db.column(db.String(200),unique=True,nullable=True)
+    phone=db.column(db.String(20),unique=True,nullable=True)
     birthdate=db.column(db.Date,nullable=True)
 
     def __init__(self,name,email,phone,birtdhate):
