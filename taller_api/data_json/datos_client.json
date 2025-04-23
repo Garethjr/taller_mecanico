@@ -1,0 +1,21 @@
+[
+    {
+        "name":"Leandro Briceño",
+        "email":"leagustin9@gmail.com",
+        "phone":"2613898893",
+        "birthdate":"10/11/2004"
+    },
+    {
+        "name":"Fran Villalobos",
+        "email":"villa10@gmail.com",
+        "phone":"26120953073",
+        "birthdate":"01/05/2005"
+    
+    },
+    {
+        "name":"Mateo Muñoz",
+        "email":"mateito@gmail.com",
+        "phone":"26120953073",
+        "birthdate":"11/10/2002"
+    }
+]
