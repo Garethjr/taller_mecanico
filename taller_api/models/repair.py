@@ -1,6 +1,7 @@
-from database.db import db
+from database import db
+
 class Reparacion(db.Model):
-    _tablename_ = 'reparaciones'
+    _tablename_ = 'Repairs'
     id = db.Column(db.Integer, primary_key=True)
     descripcion = db.Column(db.String(200), nullable=False)
     fecha = db.Column(db.Date, nullable=False)
