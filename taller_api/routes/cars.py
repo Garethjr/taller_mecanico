@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
-from models.vehiculo import Vehiculo
+from models.Cars import Car
 from database.db import db
 
-vehiculo_bp = Blueprint('vehiculo_bp', _name_)
+vehiculo_bp = Blueprint('vehiculo_bp', __name__)
 
 @vehiculo_bp.route('/', methods=['POST'])
 def crear_vehiculo():

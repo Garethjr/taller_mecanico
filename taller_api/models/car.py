@@ -2,7 +2,7 @@ from database import db
 
 class Vehiculo(db.Model):
 
-    _tablename_ = 'vehiculos'
+    _tablename_ = 'Cars'
     
     id = db.Column(db.Integer, primary_key=True)
     marca = db.Column(db.String(50), nullable=False)
