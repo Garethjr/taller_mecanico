@@ -1,7 +1,9 @@
 from database.db import db
 
 class Vehiculo(db.Model):
+
     _tablename_ = 'vehiculos'
+    
     id = db.Column(db.Integer, primary_key=True)
     marca = db.Column(db.String(50), nullable=False)
     modelo = db.Column(db.String(50), nullable=False)
