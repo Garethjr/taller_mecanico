@@ -1,8 +1,2 @@
-# Ingnorar el archivo de las variables de entorno
-.env
-
-# Ignorar archivos y carpetas python
-__pycache__/
-*.pyc
-
-flask_venv
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
