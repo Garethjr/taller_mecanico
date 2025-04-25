@@ -5,6 +5,7 @@ from database import db
 from models.client import Client
 from models.car import Car
 from models.repair import Repair 
+from models.mechanic import Mechanic
 from app import app
 from sqlalchemy import or_
 # Iniciamos el contexto de la app para que SQLAlchemy pueda trabajar con la base de datos.
@@ -68,8 +69,22 @@ with app.app_context():
                     db.session.add(new_repair)
 
         db.session.commit()
-        print("--Datos de reparaciones cargados--")    
-
+        print("--Datos de reparaciones cargados--")   
+        
+        
+        with open("data_json/datos_mechanic.json", encoding="utf-8") as file:
+            mechanics_data = json.load(file)
+            for mech in mechanics_data:
+                if not Mechanic.query.filter_by(phone=mech["phone"]).first():
+                    new_mech = Mechanic(
+                        name=mech["name"],
+                        specialty=mech["specialty"],
+                        phone=mech["phone"]
+                    )
+                    db.session.add(new_mech)
+            db.session.commit()
+            print("--Datos de mecánicos cargados--")
+            
     except Exception as e:
         db.session.rollback() # Cancela todo si hay un error
         print(f"Error al cargar datos: {e}")

@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Lucas Fernández",
+        "specialty": "Motores",
+        "phone": "2611234567"
+    },
+    {
+        "name": "María Gómez",
+        "specialty": "Electricidad",
+        "phone": "2617654321"
+    },
+    {
+        "name": "Javier Torres",
+        "specialty": "Chapa y pintura",
+        "phone": "2619876543"
+    }
+]
