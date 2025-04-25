@@ -1,17 +1,17 @@
 [
     {
         "name": "Lucas Fernández",
-        "specialty": "Motores",
+        "specialty": "Mantenimiento General",
         "phone": "2611234567"
     },
     {
         "name": "María Gómez",
-        "specialty": "Electricidad",
+        "specialty": "Motor",
         "phone": "2617654321"
     },
     {
         "name": "Javier Torres",
-        "specialty": "Chapa y pintura",
+        "specialty": "Suspension y direccion",
         "phone": "2619876543"
     }
 ]

@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from models.mechanic import Mechanic
 from database import db
 
-mechanic_bp = Blueprint("mechanic_bp", __name__, url_prefix="/mechanics")
+mechanic_bp = Blueprint("mechanic_bp", __name__)
 
 @mechanic_bp.route("/", methods=["GET"])
 def get_mechanics():
