@@ -5,7 +5,7 @@ from database import db
 from models.client import Client
 from models.car import Car
 from app import app
-
+from sqlalchemy import or_
 # Iniciamos el contexto de la app para que SQLAlchemy pueda trabajar con la base de datos.
 with app.app_context():
     try:
@@ -15,9 +15,9 @@ with app.app_context():
 
             for client in clients_data:
                 # Verificamos si ya hay un cliente con ese correo.
-                if not Client.query.filter_by(
+                if not Client.query.filter(or_(
                     (Client.email == client["email"]) | (Client.phone == client["phone"])
-                    ).first():
+                )).first():
                     # Creamos un nuevo cliente y lo agregamos a la base de datos
                     new_client = Client(
                         name =client["name"],
@@ -38,11 +38,11 @@ with app.app_context():
                 if not Car.query.filter_by(license_plate=car["license_plate"]).first():
                     # Creamos un nuevo auto y lo agregamos a la base de datos
                     new_car = Car(
-                        brand =car["brand"],
-                        model =car["model"],
-                        year =car["year"],
-                        patent =car["patent"],
-                        client_id=car["client_id"],
+                        brand = car["brand"],
+                        model = car["model"],
+                        year = car["year"],
+                        license_plate = car["license_plate"],
+                        client_id = car["client_id"],
                     )
                     db.session.add(new_car) # Preparamos el auto para ser agreagado a la base de datos
             
@@ -50,5 +50,5 @@ with app.app_context():
             print("Los datos fueron cargados correctamente")
 
     except Exception as e:
-        db.session.rollback() # Cncela todo si hay un error
+        db.session.rollback() # Cancela todo si hay un error
         print(f"Error al cargar datos: {e}")

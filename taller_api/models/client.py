@@ -4,15 +4,15 @@ from datetime import datetime
 
 class Client(db.Model):
 
-    tablename = "client"
+    __tablename__= "clients_bp"
 
-    id = db.column(db.Integer,primary_key=True)
-    name = db.column(db.String(40),nullable=True)
-    email = db.column(db.String(200),unique=True,nullable=True)
-    phone = db.column(db.String(20),unique=True,nullable=True)
-    birthdate = db.column(db.string(40),nullable=True)
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(40),nullable=True)
+    email = db.Column(db.String(200),unique=True,nullable=True)
+    phone = db.Column(db.String(20),unique=True,nullable=True)
+    birthdate = db.Column(db.string(40),nullable=True)
 
-    def init(self,name,email,phone,birtdhate):
+    def __init__(self,name,email,phone,birtdhate):
 
         self.name = name
         self.email = email
