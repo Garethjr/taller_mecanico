@@ -15,10 +15,10 @@ repair_bp = Blueprint('repair_bp', __name__)
 def create_repair():
     data = request.json  # Obtenemos los datos enviados en el cuerpo de la solicitud (formato JSON)
     new_repair = Repair(  # Creamos una instancia del modelo Repair con los datos recibidos
-        descripcion=data['descripcion'],
-        fecha=datetime.strptime(data['fecha'], '%Y-%m-%d'),  # Convertimos el string de fecha a objeto datetime
-        costo=data['costo'],
-        vehiculo_id=data['vehiculo_id']
+        description=data['description'],
+        date=datetime.strptime(data['date'], '%Y-%m-%d'),  # Convertimos el string de fecha a objeto datetime
+        cost=data['cost'],
+        car_id=data['car_id']
     )
     db.session.add(new_repair)  # Agregamos la reparación a la sesión de la base de datos
     db.session.commit()         # Confirmamos los cambios en la base de datos
@@ -33,10 +33,10 @@ def get_repairs():
     result = [  # Recorremos cada una para armar una lista de diccionarios con los datos necesarios
         {
             "id": r.id,
-            "descripcion": r.descripcion,
-            "fecha": r.fecha.isoformat(),  # Convertimos la fecha a formato string ISO
-            "costo": r.costo,
-            "vehiculo_id": r.vehiculo_id
+            "description": r.description,
+            "date": r.date.isoformat(),  # Convertimos la fecha a formato string ISO
+            "cost": r.costo,
+            "car_id": r.car_id
         }
         for r in repairs
     ]
@@ -51,9 +51,9 @@ def update_repair(id):
     repair = Repair.query.get_or_404(id)  # Buscamos la reparación por su ID, o devolvemos error 404 si no existe
     data = request.json  # Obtenemos los datos enviados en el cuerpo de la solicitud
     # Solo actualizamos los campos que vienen en la solicitud
-    repair.descripcion = data.get('descripcion', repair.descripcion)
-    repair.costo = data.get('costo', repair.costo)
-    repair.fecha = datetime.strptime(data['fecha'], '%Y-%m-%d') if 'fecha' in data else repair.fecha
+    repair.description = data.get('description', repair.description)
+    repair.cost = data.get('cost', repair.cost)
+    repair.date = datetime.strptime(data['date'], '%Y-%m-%d') if 'date' in data else repair.date
     db.session.commit()  # Guardamos los cambios
     return jsonify({"mensaje": "Reparación actualizada"})  # Respondemos con mensaje de éxito
 

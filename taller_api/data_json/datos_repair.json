@@ -1,0 +1,22 @@
+[{
+
+    "description":"cambio de aceite",
+    "date":"2025/06/17",
+    "cost":50000.00,
+    "car_id":1
+
+},
+{
+    "description":"cambio de correa",
+    "date":"2025/08/25",
+    "cost":150000.00,
+    "car_id":2
+},
+{
+    "description":"alineacion y balanceo",
+    "date":"2025/01/31",
+    "cost":60000.00,
+    "car_id":3
+}
+
+]

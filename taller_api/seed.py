@@ -4,6 +4,7 @@ from flask import Flask
 from database import db
 from models.client import Client
 from models.car import Car
+from models.repair import Repair 
 from app import app
 from sqlalchemy import or_
 # Iniciamos el contexto de la app para que SQLAlchemy pueda trabajar con la base de datos.
@@ -48,6 +49,26 @@ with app.app_context():
             
             db.session.commit() # Guardamos los cmabios en la base de datos
             print("Los datos fueron cargados correctamente")
+        
+        # Cargamos las reparaciones del archivo JSON
+        with open("data_json/datos_repair.json", encoding="utf-8") as file:
+            repairs_data = json.load(file)
+
+            for repair in repairs_data:
+                # evitamos duplicados a travez de car_id
+                existing_repair = Repair.query.filter_by(car_id=repair["car_id"]).first()
+
+                if not existing_repair:
+                    new_repair = Repair(
+                        description=repair["description"],
+                        date=repair["date"],
+                        cost=repair["cost"],
+                        car_id=repair["car_id"]
+                    )
+                    db.session.add(new_repair)
+
+        db.session.commit()
+        print("--Datos de reparaciones cargados--")    
 
     except Exception as e:
         db.session.rollback() # Cancela todo si hay un error

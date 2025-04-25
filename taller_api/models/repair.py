@@ -1,11 +1,26 @@
+from datetime import datetime
 from database import db
 
 class Repair(db.Model):
-    __tablename__ = 'repair'  # nombre de la tabla en la base de datos
+    __tablename__ = 'repair'
 
-    id = db.Column(db.Integer, primary_key=True)  # ID único de la reparación
-    descripcion = db.Column(db.String(200), nullable=False)  # Descripción de la reparación
-    fecha = db.Column(db.Date, nullable=False)  # Fecha de la reparación
-    costo = db.Column(db.Float, nullable=False)  # Costo de la reparación
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(200), nullable=False)
+    date = db.Column(db.string(40),nullable=True)
+    cost = db.Column(db.Float(200), nullable=False)
+    car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)
 
-    vehiculo_id = db.Column(db.Integer, db.ForeignKey('vehiculos.id'), nullable=False)  # ID del vehículo asociado
+    def __init__(self, description, date, cost, car_id):
+        self.description = description
+        self.date = datetime.strptime(date, "%Y/%m/%d").date()
+        self.cost = cost
+        self.car_id = car_id
+    
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "description":self.description,
+            "cost":self.cost,
+            "date":self.date,
+        }
