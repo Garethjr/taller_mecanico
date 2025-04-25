@@ -35,7 +35,7 @@ def get_repairs():
             "id": r.id,
             "description": r.description,
             "date": r.date.isoformat(),  # Convertimos la fecha a formato string ISO
-            "cost": r.costo,
+            "cost": r.cost,
             "car_id": r.car_id
         }
         for r in repairs

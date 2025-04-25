@@ -6,8 +6,8 @@ class Repair(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
-    date = db.Column(db.string(40),nullable=True)
-    cost = db.Column(db.Float(200), nullable=False)
+    date = db.Column(db.String(40),nullable=True)
+    cost = db.Column(db.Float, nullable=False)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=True)#Llave para  encontrar el auto reparado
     mechanic_id = db.Column(db.Integer, db.ForeignKey("mechanic.id"),nullable=True)#conectar el mecanico con la reparacion
     
