@@ -96,13 +96,13 @@ def client_patch():
     
     # Solo se actualizan los campos enviados
     try:
-        if "name" in data_db:
+        if "name" in data_db and data_db["name"]:
             client.name = data_db['name']
-        if 'email' in data_db:
+        if 'email' in data_db and data_db["email"]:
             client.email = data_db['email']
-        if 'phone' in data_db:
+        if 'phone' in data_db and data_db["phone"]:
             client.phone = data_db['phone']
-        if "birthdate" in data_db:
+        if "birthdate" in data_db and data_db["birthdate"]:
             client.birthdate = data_db[" birthdate"]
 
         db.session.commit()
