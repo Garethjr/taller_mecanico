@@ -25,6 +25,12 @@ class Car(db.Model):
     client = db.relationship('Client', back_populates='cars')
 
     # Método que convierte el objeto Car en un diccionario (útil para APIs JSON)
+    def __init__(self,brand,model,license_plate,client_id):
+
+        self.brand = brand
+        self.model = model
+        self.license_plate = license_plate
+
     def serialize(self):
         return {
             'id': self.id,

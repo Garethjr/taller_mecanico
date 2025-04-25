@@ -8,7 +8,7 @@ class Repair(db.Model):
     description = db.Column(db.String(200), nullable=False)
     date = db.Column(db.string(40),nullable=True)
     cost = db.Column(db.Float(200), nullable=False)
-    car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)
+    car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)#Llave para  encontrar el auto reparado
 
     def __init__(self, description, date, cost, car_id):
         self.description = description
@@ -23,4 +23,5 @@ class Repair(db.Model):
             "description":self.description,
             "cost":self.cost,
             "date":self.date,
+            'car_id': self.car_id
         }

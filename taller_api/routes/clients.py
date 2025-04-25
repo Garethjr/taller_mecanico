@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from database import db
 from models.client import Client
 
-client = Blueprint("client",__name__)
+client = Blueprint("clients_bp",__name__)
 
 # Obtener todos los clientes
 @client.route("/api/client", methods=["GET"])

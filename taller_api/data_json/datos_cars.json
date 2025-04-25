@@ -4,19 +4,19 @@
         "marca":"Toyota",
         "modelo":"Corolla",
         "patente":"msm 125",
-        "cliente_id":"10/11/2004"
+        "cliente_id":1
     },
     {
         "marca":"Ford",
         "modelo":"Mustang",
         "patente":"alv 224",
-        "cliente_id":"01/05/2005"
+        "cliente_id":2
     
     },
     {
         "marca":"Volkswagen",
         "modelo":"Golf",
         "patente":"mno 660",
-        "cliente_id":"11/10/2002"
+        "cliente_id":3
     }
 ]
