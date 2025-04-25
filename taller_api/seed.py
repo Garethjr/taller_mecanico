@@ -51,27 +51,7 @@ with app.app_context():
             db.session.commit() # Guardamos los cmabios en la base de datos
             print("Los datos fueron cargados correctamente")
         
-        # Cargamos las reparaciones del archivo JSON
-        with open("data_json/datos_repair.json", encoding="utf-8") as file:
-            repairs_data = json.load(file)
-
-            for repair in repairs_data:
-                # evitamos duplicados a travez de car_id
-                existing_repair = Repair.query.filter_by(car_id=repair["car_id"]).first()
-
-                if not existing_repair:
-                    new_repair = Repair(
-                        description=repair["description"],
-                        date=repair["date"],
-                        cost=repair["cost"],
-                        car_id=repair["car_id"]
-                    )
-                    db.session.add(new_repair)
-
-        db.session.commit()
-        print("--Datos de reparaciones cargados--")   
-        
-        
+         # Cargamos los mecanicos del archivo JSON
         with open("data_json/datos_mechanic.json", encoding="utf-8") as file:
             mechanics_data = json.load(file)
             for mech in mechanics_data:
@@ -84,6 +64,31 @@ with app.app_context():
                     db.session.add(new_mech)
             db.session.commit()
             print("--Datos de mecánicos cargados--")
+
+        # Cargamos las reparaciones del archivo JSON
+        with open("data_json/datos_repair.json", encoding="utf-8") as file:
+            repairs_data = json.load(file)
+
+            for repair in repairs_data:
+                # Evitamos duplicados por combinación de car_id y mechanic_id en esa fecha
+                existing_repair = Repair.query.filter_by(
+                    car_id=repair["car_id"],
+                    mechanic_id=repair["mechanic_id"],
+                    date=repair["date"]
+                ).first()
+
+                if not existing_repair:
+                    new_repair = Repair(
+                        description=repair["description"],
+                        date=repair["date"],
+                        cost=repair["cost"],
+                        car_id=repair["car_id"],
+                        mechanic_id=repair["mechanic_id"]
+                    )
+                    db.session.add(new_repair)
+
+            db.session.commit()
+            print("--Datos de reparaciones cargados--")
             
     except Exception as e:
         db.session.rollback() # Cancela todo si hay un error
