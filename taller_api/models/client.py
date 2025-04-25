@@ -12,26 +12,23 @@ class Client(db.Model):
     phone = db.Column(db.String(20),unique=True,nullable=True)
     birthdate = db.Column(db.string(40),nullable=True)
 
-    def __init__(self,name,email,phone,birtdhate):
+    def __init__(self,name,email,phone,birthdate):
 
         self.name = name
         self.email = email
         self.phone = phone
-        self.birthdate = birtdhate
+        self.birthdate = datetime.strptime(birthdate,"%Y/%m/%d").date()
     
     #funcion para sacar la edad
     def get_age(self):
 
         if self.birthdate:
-            fecha_str = self.birthdate 
-
-            fecha_date = datetime.strptime(fecha_str,"%Y/%m/%d").date()
 
             today = date.today()#guardamos la fecha de hoy
 
-            age = today.year-fecha_date.year
+            age = today.year-self.birthdate.year
 
-            if(today.month,today.day)<(fecha_date.month,fecha_date.day):#saber si ya cumplió años
+            if(today.month,today.day)<(self.birthdate.month,self.birthdate.day):#saber si ya cumplió años
                 age-=1
 
             return age
