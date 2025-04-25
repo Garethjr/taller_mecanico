@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from flask import Flask
 from database import db
 from models.client import Client
 from models.car import Car

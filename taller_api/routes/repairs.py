@@ -11,7 +11,7 @@ repair_bp = Blueprint('repair_bp', __name__)
 
 # Ruta para crear una nueva reparación (POST /repair/)
 
-@repair_bp.route('/', methods=['POST'])
+@repair_bp.route('/api/Post repair', methods=['POST'])
 def create_repair():
     data = request.json  # Obtenemos los datos enviados en el cuerpo de la solicitud (formato JSON)
     new_repair = Repair(  # Creamos una instancia del modelo Repair con los datos recibidos
@@ -27,7 +27,7 @@ def create_repair():
 
 
 # Ruta para obtener todas las reparaciones (GET /repair/)
-@repair_bp.route('/', methods=['GET'])
+@repair_bp.route('/api/Get repair', methods=['GET'])
 def get_repairs():
     repairs = Repair.query.all()  # Traemos todas las reparaciones desde la base de datos
     result = [  # Recorremos cada una para armar una lista de diccionarios con los datos necesarios
@@ -41,21 +41,6 @@ def get_repairs():
         for r in repairs
     ]
     return jsonify(result)  # Devolvemos la lista como respuesta JSON
-
-
-
-# Ruta para actualizar una reparación existente (PUT /repair/<id>)
-
-@repair_bp.route('/<int:id>', methods=['PUT'])
-def update_repair(id):
-    repair = Repair.query.get_or_404(id)  # Buscamos la reparación por su ID, o devolvemos error 404 si no existe
-    data = request.json  # Obtenemos los datos enviados en el cuerpo de la solicitud
-    # Solo actualizamos los campos que vienen en la solicitud
-    repair.description = data.get('description', repair.description)
-    repair.cost = data.get('cost', repair.cost)
-    repair.date = datetime.strptime(data['date'], '%Y-%m-%d') if 'date' in data else repair.date
-    db.session.commit()  # Guardamos los cambios
-    return jsonify({"mensaje": "Reparación actualizada"})  # Respondemos con mensaje de éxito
 
 # Ruta para eliminar una reparación (DELETE /repair/<id>)
 @repair_bp.route('/<int:id>', methods=['DELETE'])

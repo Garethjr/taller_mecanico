@@ -4,12 +4,12 @@ from database import db
 
 mechanic_bp = Blueprint("mechanic_bp", __name__)
 
-@mechanic_bp.route("/", methods=["GET"])
+@mechanic_bp.route("/api/Mechanic", methods=["GET"])
 def get_mechanics():
     mechanics = Mechanic.query.all()
     return jsonify([m.serialize() for m in mechanics])
 
-@mechanic_bp.route("/", methods=["POST"])
+@mechanic_bp.route("/api/Mechanic", methods=["POST"])
 def create_mechanic():
     data = request.json
     try:
