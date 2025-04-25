@@ -1,43 +1,67 @@
-from flask import Blueprint, request, jsonify
-from models.repair import Repairs
-from database import db
-from datetime import datetime
 
-reparacion_bp = Blueprint('reparacion_bp', __name__)
+# Importaciones necesarias
+from flask import Blueprint, request, jsonify  # Para definir rutas, recibir datos del cliente y responder en formato JSON
+from models.repair import Repair               # Modelo de la tabla "repair"
+from database import db                     # Objeto que representa la base de datos SQLAlchemy
+from datetime import datetime                  # Para convertir cadenas de texto en fechas
 
-@reparacion_bp.route('/', methods=['POST'])
-def crear_reparacion():
-    data = request.json
-    nueva = Repairs(
+# Creamos un Blueprint llamado 'repair_bp' para agrupar todas las rutas relacionadas con las reparaciones
+repair_bp = Blueprint('repair_bp', __name__)
+
+
+# Ruta para crear una nueva reparación (POST /repair/)
+
+@repair_bp.route('/', methods=['POST'])
+def create_repair():
+    data = request.json  # Obtenemos los datos enviados en el cuerpo de la solicitud (formato JSON)
+    new_repair = Repair(  # Creamos una instancia del modelo Repair con los datos recibidos
         descripcion=data['descripcion'],
-        fecha=datetime.strptime(data['fecha'], '%Y-%m-%d'),
+        fecha=datetime.strptime(data['fecha'], '%Y-%m-%d'),  # Convertimos el string de fecha a objeto datetime
         costo=data['costo'],
         vehiculo_id=data['vehiculo_id']
     )
-    db.session.add(nueva)
-    db.session.commit()
-    return jsonify({"mensaje": "Reparación creada"}), 201
+    db.session.add(new_repair)  # Agregamos la reparación a la sesión de la base de datos
+    db.session.commit()         # Confirmamos los cambios en la base de datos
+    return jsonify({"mensaje": "Reparación creada"}), 201  # Respondemos con mensaje de éxito
 
-@reparacion_bp.route('/', methods=['GET'])
-def obtener_reparaciones():
-    reparaciones = Repairs.query.all()
-    resultado = [{"id": r.id, "descripcion": r.descripcion, "fecha": r.fecha.isoformat(), "costo": r.costo, "vehiculo_id": r.vehiculo_id} for r in reparaciones]
-    return jsonify(resultado)
 
-@reparacion_bp.route('/<int:id>', methods=['PUT'])
-def actualizar_reparacion(id):
-    reparacion = Repairs.query.get_or_404(id)
-    data = request.json
-    reparacion.descripcion = data.get('descripcion', reparacion.descripcion)
-    reparacion.costo = data.get('costo', reparacion.costo)
-    reparacion.fecha = datetime.strptime(data['fecha'], '%Y-%m-%d') if 'fecha' in data else reparacion.fecha
-    db.session.commit()
-    return jsonify({"mensaje": "Reparación actualizada"})
 
-@reparacion_bp.route('/<int:id>', methods=['DELETE'])
-def eliminar_reparacion(id):
-    reparacion = Repairs.query.get_or_404(id)
-    db.session.delete(reparacion)
-    db.session.commit()
-    return jsonify({"mensaje": "Reparación eliminada"})
+# Ruta para obtener todas las reparaciones (GET /repair/)
+@repair_bp.route('/', methods=['GET'])
+def get_repairs():
+    repairs = Repair.query.all()  # Traemos todas las reparaciones desde la base de datos
+    result = [  # Recorremos cada una para armar una lista de diccionarios con los datos necesarios
+        {
+            "id": r.id,
+            "descripcion": r.descripcion,
+            "fecha": r.fecha.isoformat(),  # Convertimos la fecha a formato string ISO
+            "costo": r.costo,
+            "vehiculo_id": r.vehiculo_id
+        }
+        for r in repairs
+    ]
+    return jsonify(result)  # Devolvemos la lista como respuesta JSON
+
+
+
+# Ruta para actualizar una reparación existente (PUT /repair/<id>)
+
+@repair_bp.route('/<int:id>', methods=['PUT'])
+def update_repair(id):
+    repair = Repair.query.get_or_404(id)  # Buscamos la reparación por su ID, o devolvemos error 404 si no existe
+    data = request.json  # Obtenemos los datos enviados en el cuerpo de la solicitud
+    # Solo actualizamos los campos que vienen en la solicitud
+    repair.descripcion = data.get('descripcion', repair.descripcion)
+    repair.costo = data.get('costo', repair.costo)
+    repair.fecha = datetime.strptime(data['fecha'], '%Y-%m-%d') if 'fecha' in data else repair.fecha
+    db.session.commit()  # Guardamos los cambios
+    return jsonify({"mensaje": "Reparación actualizada"})  # Respondemos con mensaje de éxito
+
+# Ruta para eliminar una reparación (DELETE /repair/<id>)
+@repair_bp.route('/<int:id>', methods=['DELETE'])
+def delete_repair(id):
+    repair = Repair.query.get_or_404(id)  # Buscamos la reparación por ID o devolvemos 404 si no existe
+    db.session.delete(repair)  # Marcamos el objeto para eliminación
+    db.session.commit()        # Confirmamos la eliminación
+    return jsonify({"mensaje": "Reparación eliminada"})  # Mensaje de éxito
 
