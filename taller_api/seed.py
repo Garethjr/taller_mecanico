@@ -51,7 +51,7 @@ with app.app_context():
             db.session.commit() # Guardamos los cmabios en la base de datos
             print("Los datos fueron cargados correctamente")
         
-         # Cargamos los mecanicos del archivo JSON
+        
         with open("data_json/datos_mechanic.json", encoding="utf-8") as file:
             mechanics_data = json.load(file)
             for mech in mechanics_data:
