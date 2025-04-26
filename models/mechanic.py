@@ -1,7 +1,7 @@
 from database import db
 
 class Mechanic(db.Model):
-    _tablename_ = "mechanic"
+    __tablename__ = "mechanic"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -9,7 +9,7 @@ class Mechanic(db.Model):
     phone = db.Column(db.String(20), nullable=True, unique=True)
     mechanic_id = db.Column(db.Integer, db.ForeignKey("mechanic.id"),nullable=True)
 
-    def _init_(self, name, specialty=None, phone=None):
+    def __init__(self, name, specialty=None, phone=None):
         self.name = name
         self.specialty = specialty
         self.phone = phone

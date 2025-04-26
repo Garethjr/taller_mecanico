@@ -3,7 +3,7 @@ from database import db
 
 # Define la clase Car como un modelo de base de datos
 class Car(db.Model):
-    __tablename__ = 'cars'
+    __tablename__ = 'car'
 
     # Columna 'id' como clave primaria, tipo entero
     id = db.Column(db.Integer, primary_key=True)
@@ -30,6 +30,7 @@ class Car(db.Model):
         self.brand = brand
         self.model = model
         self.license_plate = license_plate
+        self.client_id = client_id  
 
     def serialize(self):
         return {

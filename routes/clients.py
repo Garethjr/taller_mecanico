@@ -42,7 +42,7 @@ def add_client():
         return jsonify({"Error inesperado": str(e)}),500
 
 # Eliminar un cliente
-@client_bp.route("/api/client_delete",methods=["Delete"])
+@client_bp.route("/api/client_delete", methods=["DELETE"])
 def delete_client(id):
     client = Client.query.get(id)
     if not client:
@@ -58,7 +58,7 @@ def delete_client(id):
         return jsonify({'Error inesperado':str(e)}), 500
 
 # Actualizar todos los datos del cliente
-@client_bp.route("/api/cliente_Put",methods=["Put"])
+@client_bp.route("/api/cliente_Put",methods=["PUT"])
 def update_cliente(id):
     data_db = request.get_json()
     client = Client.query.get(id)
@@ -86,7 +86,7 @@ def update_cliente(id):
         return jsonify({'error': str(e)}), 500
     
 # Actualizar solo algunos datos del cliente (PATCH)
-@client_bp.route("/api/Patch_client",methods=["Patch"])
+@client_bp.route("/api/Patch_client",methods=["PATCH"])
 def client_patch():
     data_db=request.get_json()
     client = Client.query.get(id)
