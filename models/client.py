@@ -10,7 +10,7 @@ class Client(db.Model):
     name = db.Column(db.String(40),nullable=True)
     email = db.Column(db.String(200),unique=True,nullable=True)
     phone = db.Column(db.String(20),unique=True,nullable=True)
-    birthdate = db.Column(db.string(40),nullable=True)
+    birthdate = db.Column(db.String(40), nullable=True)
 
     def __init__(self,name,email,phone,birthdate):
 

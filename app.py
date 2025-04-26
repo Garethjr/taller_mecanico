@@ -1,12 +1,11 @@
 from flask import Flask
 from config import DATABASE_URL 
 from database import db
-from models import Client, Car
-from routes.clients import clients_bp
-from routes.cars import cars_bp
-from routes.repairs import repairs_bp
+from models import Client, Car, Repair
+from routes.clients import client_bp
+from routes.cars import car_bp
+from routes.repairs import repair_bp
 from routes.mechanic import mechanic_bp
-from taller_api.models import repair
 
 app = Flask(__name__) # Crea la app de Flask
 
@@ -18,11 +17,11 @@ db.init_app(app)
 
 # Registramos los blueprints
 
-app.register_blueprint(clients_bp)
-app.register_blueprint(cars_bp)
-app.register_blueprint(repairs_bp)
+app.register_blueprint(client_bp)
+app.register_blueprint(car_bp)
+app.register_blueprint(repair_bp)
 app.register_blueprint(mechanic_bp)
-@app.before_first_request
+
 def create_tables():
     db.create_all()
 
