@@ -3,16 +3,16 @@ from sqlalchemy.exc import IntegrityError
 from database import db
 from models.client import Client
 
-client = Blueprint("clients_bp",__name__)
+clients_bp = Blueprint("clients_bp",__name__)
 
 # Obtener todos los clientes
-@client.route("/api/client", methods=["GET"])
+@clients_bp.route("/api/client", methods=["GET"])
 def get_client():
     clients = Client.query.all() # Devuelve una lista de objetos clientes
     return jsonify([client.serialize() for client in clients]) # convertirlo en formato jsonify
 
 # Agregar un cliente nuevo
-@client.route("/api/add_client",methods=["POST"])
+@clients_bp.route("/api/add_client",methods=["POST"])
 def add_client():
     datos_db=request.get_json() # convierte en diccionario
 
@@ -42,7 +42,7 @@ def add_client():
         return jsonify({"Error inesperado": str(e)}),500
 
 # Eliminar un cliente
-@client.route("/api/client_delete",methods=["Delete"])
+@clients_bp.route("/api/client_delete",methods=["Delete"])
 def delete_client(id):
     client = Client.query.get(id)
     if not client:
@@ -58,7 +58,7 @@ def delete_client(id):
         return jsonify({'Error inesperado':str(e)}), 500
 
 # Actualizar todos los datos del cliente
-@client.route("/api/cliente_Put",methods=["Put"])
+@clients_bp.route("/api/cliente_Put",methods=["Put"])
 def update_cliente(id):
     data_db = request.get_json()
     client = Client.query.get(id)
@@ -86,7 +86,7 @@ def update_cliente(id):
         return jsonify({'error': str(e)}), 500
     
 # Actualizar solo algunos datos del cliente (PATCH)
-@client.route("/api/Patch_client",methods=["Patch"])
+@clients_bp.route("/api/Patch_client",methods=["Patch"])
 def client_patch():
     data_db=request.get_json()
     client = Client.query.get(id)

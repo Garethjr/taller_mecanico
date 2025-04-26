@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLALchemy
+from flask_sqlalchemy import SQLAlchemy
 
 # Crea la intancia de SQLALchemy
-db = SQLALchemy()
+db = SQLAlchemy()
